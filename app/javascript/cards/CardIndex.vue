@@ -7,7 +7,7 @@
         <b-card no-body class="mb-1" v-for="card in cards" :key="card.id">
           <!-- japanese text -->
           <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button block v-b-toggle="'accordion-' + card.id" variant="info" class="position-relative">
+            <b-button block v-b-toggle="'accordion-' + card.id" variant="info" class="position-relative" @click="link(card)">
               {{ card.japanese_text }}
               <b-collapse :id="'collapse-' + card.id" class="position-absolute">
                 <b-form-input v-model="card.japanese_text" @blur="updateCard(card)"></b-form-input>
@@ -25,14 +25,14 @@
                 </b-collapse>
               </b-card-text>
               <!-- source -->
-              <b-card-text class="position-relative">
-                {{ card.source }}
+              <b-card-text :id="'source' + card.id" class="position-relative" v-html="card.source">
+                <!-- {{ card.source }} -->
                 <b-collapse :id="'collapse-' + card.id" class="position-absolute">
                   <b-form-input v-model="card.source" @blur="updateCard(card)"></b-form-input>
                 </b-collapse>
               </b-card-text>
               <!-- detail -->
-              <b-card-text><router-link :to="{ name: 'CardShow', params: {id: card.id } }">detail</router-link></b-card-text>
+            <b-card-text><router-link :to="{ name: 'CardShow', params: {id: card.id } }"  >detail</router-link></b-card-text>
               <!-- edit -->
               <b-button v-b-toggle="'collapse-' + card.id">edit</b-button>
               <!-- destroy -->
@@ -48,6 +48,7 @@
 <script>
   import axios from 'axios';
   import {reject} from 'lodash';
+  import Autolinker from 'autolinker';
 
   import CardForm from '../cards/CardForm.vue';
 
@@ -58,8 +59,9 @@
       }
     },
     mounted() {
+      // source1.innerHTML = Autolinker.link(this.$refs.source1.innerHTML);
       axios.get('/api/v1/cards.json')
-        .then(res => (this.cards = res.data))
+        .then(res => (this.cards = res.data));
     },
     components: {
       CardForm
@@ -83,6 +85,9 @@
             this.cards = reject(this.cards, ['id', card.id]);
           }
         });
+      },
+      link(card) {
+        card.source = Autolinker.link(card.source);
       }
     }
   }
