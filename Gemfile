@@ -48,8 +48,6 @@ group :development do
   gem 'rubocop-rspec'
   # annotate
   gem 'annotate'
-  # ActiveAdmin
-  gem 'activeadmin'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
