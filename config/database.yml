@@ -50,5 +50,6 @@ test:
 production:
   <<: *default
   database: memorization_app_production
+  # database: memorization_app_development
   username: memorization_app
   password: <%= ENV['MEMORIZATION_APP_DATABASE_PASSWORD'] %>
