@@ -12,7 +12,8 @@ services:
       - mysql_data:/var/lib/mysql
   app:
     build:
-      context: ./Docker/app
+      context: .
+      dockerfile: ./Docker/app/Dockerfile
     command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/myapp
@@ -23,7 +24,8 @@ services:
       - db
   web:
     build:
-      context: ./Docker/web
+      context: .
+      dockerfile: ./Docker/web/Dockerfile
     volumes:
       - public_data:/myapp/public
       - tmp_data:/myapp/tmp
