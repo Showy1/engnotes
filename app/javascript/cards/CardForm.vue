@@ -57,7 +57,7 @@
             switch (res.status) {
               case 201:
                 this.$emit('add', res.data)
-                this.toDo = {
+                this.card = {
                   japaneseText: '',
                   englishText: '',
                   source: '',

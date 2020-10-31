@@ -1,2 +1,9 @@
+<% content_for :pack do %>
+  <%= javascript_pack_tag 'application' %>
+  <%= javascript_pack_tag 'hello_vue' %>
+  <%= stylesheet_pack_tag 'hello_vue' %>
+<% end %>
+
+<input type="hidden" id="current_user_id" value="<%= current_user.id %>">
+
 <h1>Cards#index</h1>
-<p>Find me in app/views/cards/index.html.erb</p>

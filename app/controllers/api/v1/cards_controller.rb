@@ -5,7 +5,7 @@ class Api::V1::CardsController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
 
   def index
-    cards = Card.select(:id, :japanese_text, :english_text, :source)
+    cards = Card.select(:id, :japanese_text, :english_text, :source, :user_id)
     render json: cards
   end
 
@@ -41,7 +41,7 @@ class Api::V1::CardsController < ActionController::API
     end
 
     def card_params
-      params.require(:card).permit(:japanese_text, :english_text, :source)
+      params.require(:card).permit(:japanese_text, :english_text, :source).merge(user_id: current_user.id)
     end
 
     def render_status_404(exception)
