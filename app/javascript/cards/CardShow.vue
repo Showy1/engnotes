@@ -10,6 +10,9 @@
       <dt class="col-sm-3">source</dt>
       <dd class="col-sm-9">{{ card.source }}</dd>
 
+      <dt class="col-sm-3">user</dt>
+      <dd class="col-sm-9">{{ card.user_id }}</dd>
+
       <dt class="col-sm-3">created</dt>
       <dd class="col-sm-9">{{ card.created_at | moment }}</dd>
 
