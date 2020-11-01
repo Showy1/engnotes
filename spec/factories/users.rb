@@ -1,18 +1,8 @@
-class User < ApplicationRecord
-  validates :username, length: { minimum: 3, maximum: 20 }
-
-  attr_accessor :login
-
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable, :authentication_keys => [:login]
-
-  def self.find_first_by_auth_conditions(warden_conditions)
-    conditions = warden_conditions.dup
-    if login = conditions.delete(:login)
-      where(conditions).where(["username = :value OR lower(email) = lower(:value)", { :value => login }]).first
-    else
-      where(conditions).first
-    end
+FactoryBot.define do
+  factory :user do
+    sequence(:username) { |n| "TEST_NAME#{n}" }
+    sequence(:email) { |n| "TEST#{n}@example.com" }
+    password {"password"}
   end
 end
 

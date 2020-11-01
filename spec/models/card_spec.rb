@@ -1,7 +1,26 @@
 require 'rails_helper'
 
 RSpec.describe Card, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    @card = build(:card)
+    #ref. spec/factories/cards.rb
+    # english_text {"ENGLISH_TEXT"}
+    # japanese_text {"日本語の文章"}
+    # source {"https://example.com"}
+    # user_id {1}
+  end
+
+  it "is valid with english_text, japanese_text, source and user_id" do
+    expect(@card).to be_valid
+  end
+
+  it "is invalid without english_test" do
+    pending
+    @card.english_text = ""
+    # expect(@card).to be_valid
+    @card.valid?
+    expect(@card.errors[:english_text]).to include("can't be blank")
+  end
 end
 
 # == Schema Information

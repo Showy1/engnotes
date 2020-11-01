@@ -35,6 +35,8 @@ group :development, :test do
   # RSpec
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
+  gem "factory_bot_rails"
+  gem "capybara"
 end
 
 group :development do
