@@ -9,46 +9,45 @@ RSpec.describe User, type: :model do
     # password {"password"}
   end
 
-  it "is valid with username, email and password" do
+  it 'is valid with username, email and password' do
     expect(@user).to be_valid
   end
 
-  it "is invalid without username" do
-    @user.username = ""
+  it 'is invalid without username' do
+    @user.username = ''
     @user.valid?
-    expect(@user.errors[:username]).to include("is too short (minimum is 3 characters)")
+    expect(@user.errors[:username]).to include('is too short (minimum is 3 characters)')
   end
 
-  it "is invalid with short username" do
-    @user.username = "Xu"
+  it 'is invalid with short username' do
+    @user.username = 'Xu'
     @user.valid?
-    expect(@user.errors[:username]).to include("is too short (minimum is 3 characters)")
+    expect(@user.errors[:username]).to include('is too short (minimum is 3 characters)')
   end
 
-  it "is invalid without email" do
-    @user.email = ""
+  it 'is invalid without email' do
+    @user.email = ''
     @user.valid?
     expect(@user.errors[:email]).to include("can't be blank")
   end
 
-  it "is invalid with duplicated email" do
+  it 'is invalid with duplicated email' do
     pending
     user1 = create(:user)
     user2 = FactoryBot.build(:user)
     user2.valid?
-    expect(user2.errors[:email]).to include("is too short (minimum is 3 characters)")
+    expect(user2.errors[:email]).to include('is too short (minimum is 3 characters)')
   end
 
-  it "is invalid without password" do
-    @user.password = ""
+  it 'is invalid without password' do
+    @user.password = ''
     @user.valid?
     expect(@user.errors[:password]).to include("can't be blank")
   end
 
-  it "has encrypted password" do
-    expect(@user.encrypted_password).not_to eq("password")
+  it 'has encrypted password' do
+    expect(@user.encrypted_password).not_to eq('password')
   end
-
 end
 
 # == Schema Information

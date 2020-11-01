@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "cards/index.html.erb", type: :view do
+RSpec.describe 'cards/index.html.erb', type: :view do
   # before do
   #   @user = build(:user)
   #   # ref. spec/factories/users.rb
