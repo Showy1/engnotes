@@ -71,7 +71,7 @@ Lint/StructNewOverride:
   Enabled: true
 
 Layout/LineLength:
-  Max: 150
+  Max: 200
 
 Metrics/AbcSize:
   Exclude:
@@ -85,6 +85,7 @@ Metrics/BlockLength:
     - 'spec/**/*'
     - 'app/views/**/*.jbuilder'
     - 'lib/tasks/dev.rake'
+    - 'config/environments/development.rb'
 
 Metrics/ClassLength:
   CountComments: false

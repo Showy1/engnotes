@@ -23,15 +23,11 @@ class Api::V1::CardsController < ActionController::API
   end
 
   def update
-    if @card.update(card_params)
-      render status: 200, json: { status: 200 }
-    end
+    render status: 200, json: { status: 200 } if @card.update(card_params)
   end
 
   def destroy
-    if @card.destroy!
-      render status: 200, json: { status: 200 }
-    end
+    render status: 200, json: { status: 200 } if @card.destroy!
   end
 
   private
