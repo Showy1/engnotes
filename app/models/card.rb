@@ -1,4 +1,8 @@
 class Card < ApplicationRecord
+  with_options presence: true do
+    validates :english_text
+    validates :japanese_text
+  end
 end
 
 # == Schema Information

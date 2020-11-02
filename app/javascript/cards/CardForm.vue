@@ -1,9 +1,9 @@
 <template id="">
   <div class="create_new_card">
     <b-form @submit="onSubmit" @reset="onReset" :model="card">
-      <b-form-group id="input-group-1" label-for="input-1">
+      <b-form-group id="input-group-1" label-for="input_japanese_text">
         <b-form-input
-          id="input-1"
+          id="input_japanese_text"
           v-model="card.japanese_text"
           type="text"
           required
@@ -11,9 +11,9 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label-for="input-2">
+      <b-form-group id="input-group-2" label-for="input_english_text">
         <b-form-input
-          id="input-2"
+          id="input_english_text"
           v-model="card.english_text"
           type="text"
           required
@@ -21,9 +21,9 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-3" label-for="input-3">
+      <b-form-group id="input-group-3" label-for="input_source">
         <b-form-input
-          id="input-3"
+          id="input_source"
           v-model="card.source"
           type="text"
           placeholder="Enter source"
@@ -71,8 +71,9 @@
       },
       onReset(evt) {
         evt.preventDefault()
-        this.form.email = ''
-        this.form.name = ''
+        this.card.japanese_text = ''
+        this.card.english_text = ''
+        this.card.source = ''
       }
     }
   }
