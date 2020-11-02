@@ -1,19 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::V1::Cards', type: :request do
-  describe 'GET /index' do
+  describe 'GET /api/v1/cards' do
     it 'returns http success' do
-      pending
-      get '/api/v1/cards/index'
-      expect(response).to have_http_status(:success)
-    end
-  end
-
-  describe 'GET /show' do
-    it 'returns http success' do
-      pending
-      get '/api/v1/cards/show'
-      expect(response).to have_http_status(:success)
+      get '/api/v1/cards'
+      expect(response).to have_http_status(:ok)
     end
   end
 end

@@ -1,52 +1,49 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  before do
-    @user = build(:user)
-    # ref. spec/factories/users.rb
-    # sequence(:username) { |n| "TEST_NAME#{n}" }
-    # sequence(:email) { |n| "TEST#{n}@example.com" }
-    # password {"password"}
-  end
+  let(:user) { build(:user) }
+  # ref. spec/factories/users.rb
+  # sequence(:username) { |n| "TEST_NAME#{n}" }
+  # sequence(:email) { |n| "TEST#{n}@example.com" }
+  # password {"password"}
 
   it 'is valid with username, email and password' do
-    expect(@user).to be_valid
+    expect(user).to be_valid
   end
 
   it 'is invalid without username' do
-    @user.username = ''
-    @user.valid?
-    expect(@user.errors[:username]).to include('is too short (minimum is 3 characters)')
+    user.username = ''
+    user.valid?
+    expect(user.errors[:username]).to include('is too short (minimum is 3 characters)')
   end
 
   it 'is invalid with short username' do
-    @user.username = 'Xu'
-    @user.valid?
-    expect(@user.errors[:username]).to include('is too short (minimum is 3 characters)')
+    user.username = 'Xu'
+    user.valid?
+    expect(user.errors[:username]).to include('is too short (minimum is 3 characters)')
   end
 
   it 'is invalid without email' do
-    @user.email = ''
-    @user.valid?
-    expect(@user.errors[:email]).to include("can't be blank")
+    user.email = ''
+    user.valid?
+    expect(user.errors[:email]).to include("can't be blank")
   end
 
   it 'is invalid with duplicated email' do
-    pending
-    user1 = create(:user)
-    user2 = FactoryBot.build(:user)
+    user1 = create(:user, email: 'duplicated@example.com')
+    user2 = build(:user, email: user1.email)
     user2.valid?
-    expect(user2.errors[:email]).to include('is too short (minimum is 3 characters)')
+    expect(user2.errors[:email]).to include('has already been taken')
   end
 
   it 'is invalid without password' do
-    @user.password = ''
-    @user.valid?
-    expect(@user.errors[:password]).to include("can't be blank")
+    user.password = ''
+    user.valid?
+    expect(user.errors[:password]).to include("can't be blank")
   end
 
   it 'has encrypted password' do
-    expect(@user.encrypted_password).not_to eq('password')
+    expect(user.encrypted_password).not_to eq('password')
   end
 end
 
