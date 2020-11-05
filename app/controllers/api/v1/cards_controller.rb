@@ -5,7 +5,16 @@ class Api::V1::CardsController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
 
   def index
-    cards = Card.select(:id, :japanese_text, :english_text, :source, :user_id)
+    user_cards = Card.where(user_id: current_user.id)
+    $review_timings = [1, 4, 7, 11, 15, 20, 30]
+    user_cards.each do |user_card|
+      if user_card.done == true && (Date.today - user_card.done_time).to_i >= $review_timings[user_card.phase]
+        user_card.done = false
+        user_card.phase += 1 unless user_card.phase == $review_timings.length - 1
+        user_card.save
+      end
+    end
+    cards = user_cards.select(:id, :japanese_text, :english_text, :source, :phase, :user_id, :note, :done, :done_time)
     render json: cards
   end
 
@@ -37,7 +46,7 @@ class Api::V1::CardsController < ActionController::API
     end
 
     def card_params
-      params.require(:card).permit(:japanese_text, :english_text, :source).merge(user_id: current_user.id)
+      params.require(:card).permit(:japanese_text, :english_text, :source, :phase, :note, :done, :done_time).merge(user_id: current_user.id)
     end
 
     def render_status_404(exception)

@@ -64,4 +64,6 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.include Devise::Test::IntegrationHelpers, type: :request
+  # activate travel
+  config.include ActiveSupport::Testing::TimeHelpers
 end
