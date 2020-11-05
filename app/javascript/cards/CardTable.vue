@@ -1,6 +1,7 @@
 <template>
   <div class="accordion" role="tablist">
-    <b-card no-body class="mb-1" v-for="card in cards" :key="card.id">
+    <!-- <b-card no-body class="mb-1" v-for="card in cards" :key="card.id"> -->
+    <b-card no-body class="mb-1" v-for="card in filteredCards" :key="card.id">
       <!-- japanese text -->
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block v-b-toggle="'accordion-' + card.id" variant="info" class="position-relative" @click="$emit('link', card)">
@@ -45,7 +46,8 @@
 
 <script>
   export default {
-    props: ['cards'],
+    // props: ['cards'],
+    props: ['filteredCards'],
     methods: {
       speak(english_text){
       	var speak = new SpeechSynthesisUtterance();

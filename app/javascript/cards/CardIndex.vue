@@ -3,6 +3,11 @@
     <b-container>
       <card-form @add="addCard" />
 
+      <b-form @reset="onReset">
+        <b-form-input type="text" v-model="keyword" id="input_search" />
+        <b-button type="reset" variant="danger" id="search_reset">Reset</b-button>
+      </b-form>
+
       <b-tabs
         active-nav-item-class="font-weight-bold text-uppercase text-danger"
         active-tab-class="font-weight-bold text-success"
@@ -10,11 +15,13 @@
       >
         <b-tab title="Undone" active>
           <!-- <card-table :user-cards='filter(userCards, false)' @update='updateCard' @destroy='destroyCard' @done='done' @link='link' /> -->
-          <card-table :cards='filter(cards, false)' @update='updateCard' @destroy='destroyCard' @done='done' @link='link' />
+          <card-table :filteredCards='filter(filteredCards, false)' @update='updateCard' @destroy='destroyCard' @done='done' @link='link' />
+          <!-- <card-table :cards='filter(cards, false)' @update='updateCard' @destroy='destroyCard' @done='done' @link='link' /> -->
         </b-tab>
         <b-tab title="Done" @click='get'>
           <!-- <card-table v-bind:user-cards='filter(userCards, true)' @update='updateCard' @destroy='destroyCard' /> -->
-          <card-table :cards='filter(cards, true)' @update='updateCard' @destroy='destroyCard' />
+          <!-- <card-table :cards='filter(cards, true)' @update='updateCard' @destroy='destroyCard' /> -->
+          <card-table :filteredCards='filter(filteredCards, true)' @update='updateCard' @destroy='destroyCard' />
         </b-tab>
       </b-tabs>
     </b-container>
@@ -33,6 +40,7 @@
   export default {
     data() {
       return {
+        keyword: '',
         cards: []
       }
     },
@@ -50,6 +58,16 @@
       //     return card.user_id == document.getElementById('current_user_id').value
       //   }, this);
       // },
+      filteredCards() {
+        var cards = [];
+        for(var i in this.cards) {
+            var card = this.cards[i];
+            if(card.japanese_text.indexOf(this.keyword) !== -1 || card.english_text.indexOf(this.keyword) !== -1) {
+                cards.push(card);
+            }
+        }
+        return cards;
+      }
     },
     methods: {
       get() {
@@ -94,6 +112,10 @@
       },
       link(card) {
         card.source = Autolinker.link(card.source);
+      },
+      onReset(evt) {
+        evt.preventDefault()
+        this.keyword = ''
       }
     }
   }

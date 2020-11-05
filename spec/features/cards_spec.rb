@@ -141,4 +141,30 @@ RSpec.feature 'Cards', type: :feature do
 
     travel_back
   end
+
+  scenario 'two new cards are created and one is searched', js: true do
+    # confirm login
+    expect(page).to have_content user.username
+
+    # create two new cards and confirm shown
+    find('#input_japanese_text').set('1つ目のテキスト')
+    find('#input_english_text').set('first text')
+    click_on 'Submit'
+    find('#input_japanese_text').set('2つ目のテキスト')
+    find('#input_english_text').set('second text')
+    click_on 'Submit'
+    expect(page).to have_content '1つ目のテキスト'
+    expect(page).to have_content '2つ目のテキスト'
+    expect(page).not_to have_content 'text'
+
+    # search
+    find('#input_search').set('1つ目')
+    expect(page).to have_content '1つ目のテキスト'
+    expect(page).not_to have_content '2つ目のテキスト'
+
+    # reset
+    find('#search_reset').click
+    expect(page).to have_content '1つ目のテキスト'
+    expect(page).to have_content '2つ目のテキスト'
+  end
 end
