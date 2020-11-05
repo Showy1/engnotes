@@ -1,6 +1,5 @@
 <template>
   <div class="accordion" role="tablist">
-    <!-- <b-card no-body class="mb-1" v-for="card in userCards" :key="card.id"> -->
     <b-card no-body class="mb-1" v-for="card in cards" :key="card.id">
       <!-- japanese text -->
       <b-card-header header-tag="header" class="p-1" role="tab">
@@ -17,6 +16,8 @@
           <!-- english text -->
           <b-card-text class="position-relative">
             {{ card.english_text }}
+            <!-- speak -->
+            <b-button variant="info" @click="speak(card.english_text)">speak</b-button>
             <b-collapse :id="'collapse-' + card.id" class="position-absolute">
               <b-form-input v-model="card.english_text" @blur="$emit('update', card)"></b-form-input>
             </b-collapse>
@@ -33,7 +34,6 @@
           <!-- edit -->
           <b-button v-b-toggle="'collapse-' + card.id">edit</b-button>
           <!-- destroy -->
-          <!-- <b-button variant="danger" @click="destroyCard(card)">delete</b-button> -->
           <b-button variant="danger" @click="$emit('destroy', card)">delete</b-button>
           <!-- done -->
           <b-button variant="success" @click="$emit('done', card)">done</b-button>
@@ -45,8 +45,15 @@
 
 <script>
   export default {
-    // props: ['userCards']
-    props: ['cards']
+    props: ['cards'],
+    methods: {
+      speak(english_text){
+      	var speak = new SpeechSynthesisUtterance();
+        speak.text = english_text;
+        speak.lang = 'en';
+        speechSynthesis.speak(speak);
+      }
+    }
   }
 </script>
 
