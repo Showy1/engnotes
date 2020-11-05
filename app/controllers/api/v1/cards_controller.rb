@@ -8,11 +8,13 @@ class Api::V1::CardsController < ActionController::API
     user_cards = Card.where(user_id: current_user.id)
     $review_timings = [1, 4, 7, 11, 15, 20, 30]
     user_cards.each do |user_card|
-      if user_card.done == true && (Date.today - user_card.done_time).to_i >= $review_timings[user_card.phase]
-        user_card.done = false
-        user_card.phase += 1 unless user_card.phase == $review_timings.length - 1
-        user_card.save
+      unless user_card.done == true && (Time.zone.today - user_card.done_time).to_i >= $review_timings[user_card.phase]
+        next
       end
+
+      user_card.done = false
+      user_card.phase += 1 unless user_card.phase == $review_timings.length - 1
+      user_card.save
     end
     cards = user_cards.select(:id, :japanese_text, :english_text, :source, :phase, :user_id, :note, :done, :done_time)
     render json: cards

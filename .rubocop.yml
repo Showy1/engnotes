@@ -10,7 +10,7 @@ inherit_from: .rubocop_todo.yml
 # where the inspected file is and continue its way up to the root directory.
 #
 # See https://github.com/rubocop-hq/rubocop/blob/master/manual/configuration.md
-## rubocop 関連の gem を require します。
+## require rubocop gem
 require:
   - rubocop-rails
   - rubocop-rspec
@@ -40,7 +40,7 @@ Rails/FilePath:
 Style/AndOr:
   Enabled: false
 
-## 日本語コメントを許可します。
+## permit Japanese comments
 Style/AsciiComments:
   Enabled: false
 
@@ -74,6 +74,7 @@ Layout/LineLength:
   Enabled: false
 
 Metrics/AbcSize:
+  Max: 25
   Exclude:
     - 'lib/tasks/dev.rake'
 
@@ -107,6 +108,19 @@ Naming/FileName:
 Naming/MethodParameterName:
   AllowedNames: [e]
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Style/GlobalVars:
+  Enabled: false
+
+# RSpec
 RSpec/ContextWording:
   Enabled: false
 
