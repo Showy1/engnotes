@@ -30,6 +30,7 @@ RSpec.feature 'Cards', type: :feature do
     # click card and confirm opened
     click_on 'テキスト'
     expect(page).to have_content 'text'
+    expect(page).to have_content 'done'
 
     # done and confirm unshown
     click_on 'done'
@@ -43,6 +44,7 @@ RSpec.feature 'Cards', type: :feature do
     # click card and confirm opened
     click_on 'テキスト'
     expect(page).to have_content 'text'
+    expect(page).to have_content 'delete'
 
     # delete card and confirm it
     click_on 'delete'
@@ -72,9 +74,7 @@ RSpec.feature 'Cards', type: :feature do
     expect(page).not_to have_content 'テキスト'
 
     # a day later
-    p Date.today
     travel 1.day
-    p Date.today
     visit current_path
     expect(page).to have_content 'テキスト'
     click_on 'テキスト'
@@ -84,19 +84,16 @@ RSpec.feature 'Cards', type: :feature do
     expect(page).not_to have_content 'テキスト'
 
     # 3 days later
-    travel 3.day
-    p Date.today
+    travel 3.days
     visit current_path
     expect(page).not_to have_content 'テキスト'
 
     # a day later
     travel 1.day
-    p Date.today
     visit current_path
     expect(page).to have_content 'テキスト'
 
     travel_back
-    p Date.today
   end
 
   scenario 'a new card is created and done / the card is shown [1, 4, 7, 11, 15, 20, 30] and 30 days later', js: true do
