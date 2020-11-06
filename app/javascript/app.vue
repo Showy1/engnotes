@@ -8,8 +8,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import CardIndex from 'cards/CardIndex.vue'
-import CardShow from 'cards/CardShow.vue'
+import CardIndex from 'cards/CardIndex.vue';
+import CardShow from 'cards/CardShow.vue';
 
 const routes = [
   { path: '/', component: CardIndex },
@@ -25,7 +25,7 @@ Vue.use(VueRouter);
 
 export default {
   router
-}
+};
 </script>
 
 <style scoped>

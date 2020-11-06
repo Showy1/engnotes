@@ -66,6 +66,7 @@ RSpec.feature 'Cards', type: :feature do
     # click card and confirm opened
     click_on 'テキスト'
     expect(page).to have_content 'text'
+    expect(page).to have_content 'done'
 
     # done and confirm unshown
     click_on 'done'
