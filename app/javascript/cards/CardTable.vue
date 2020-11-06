@@ -7,7 +7,13 @@
       no-body
     >
       <!-- japanese text -->
-      <b-card-header header-tag="header" class="p-1" role="tab">
+      <b-card-header
+        header-tag="header"
+        class="p-1"
+        role="tab"
+        @keyup.enter="$emit('done', card)"
+        @keyup.83="speak(card.english_text)"
+      >
         <b-button
           v-b-toggle="'accordion-' + card.id"
           variant="info"
