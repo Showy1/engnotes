@@ -20,6 +20,7 @@ RSpec.feature 'Cards', type: :feature do
     expect(page).to have_content user.username
 
     # create a new card and confirm shown
+    click_on 'New'
     find('#input_japanese_text').set('テキスト')
     find('#input_english_text').set('text')
     find('#input_source').set('https://text.com')
@@ -51,11 +52,9 @@ RSpec.feature 'Cards', type: :feature do
     expect(page).not_to have_content 'テキスト'
   end
 
-  scenario 'a new card is created and done / the card is shown a day later / the card is shown 4 days later', js: true do
-    # confirm login
-    expect(page).to have_content user.username
-
+  scenario 'a new card is created and done / the card is shown a day and 4 days later', js: true do
     # create a new card and confirm shown
+    click_on 'New'
     find('#input_japanese_text').set('テキスト')
     find('#input_english_text').set('text')
     find('#input_source').set('https://text.com')
@@ -98,10 +97,8 @@ RSpec.feature 'Cards', type: :feature do
   end
 
   scenario 'a new card is created and done / the card is shown [1, 4, 7, 11, 15, 20, 30] and 30 days later', js: true do
-    # confirm login
-    expect(page).to have_content user.username
-
     # create a new card and confirm shown
+    click_on 'New'
     find('#input_japanese_text').set('テキスト')
     find('#input_english_text').set('text')
     find('#input_source').set('https://text.com')
@@ -119,19 +116,20 @@ RSpec.feature 'Cards', type: :feature do
     expect(page).not_to have_content 'テキスト'
 
     # shown and done [1, 4, 7, 11, 15, 20, 30] days later
-    $review_timings.each do |timing|
+    Constants::REVIEW_TIMINGS.each do |timing|
       travel timing.day
       visit current_path
       expect(page).to have_content 'テキスト'
       click_on 'テキスト'
       expect(page).to have_content 'text'
       expect(page).to have_content 'done'
+      expect(page).to have_content 'shown'
       click_on 'done'
       expect(page).not_to have_content 'テキスト'
     end
 
     # shown and done 30 days later
-    travel $review_timings.last.day
+    travel Constants::REVIEW_TIMINGS.last.day
     visit current_path
     expect(page).to have_content 'テキスト'
     click_on 'テキスト'
@@ -144,10 +142,8 @@ RSpec.feature 'Cards', type: :feature do
   end
 
   scenario 'two new cards are created and one is searched', js: true do
-    # confirm login
-    expect(page).to have_content user.username
-
     # create two new cards and confirm shown
+    click_on 'New'
     find('#input_japanese_text').set('1つ目のテキスト')
     find('#input_english_text').set('first text')
     click_on 'Submit'
@@ -159,6 +155,7 @@ RSpec.feature 'Cards', type: :feature do
     expect(page).not_to have_content 'text'
 
     # search
+    click_on 'Search'
     find('#input_search').set('1つ目')
     expect(page).to have_content '1つ目のテキスト'
     expect(page).not_to have_content '2つ目のテキスト'
@@ -167,5 +164,29 @@ RSpec.feature 'Cards', type: :feature do
     find('#search_reset').click
     expect(page).to have_content '1つ目のテキスト'
     expect(page).to have_content '2つ目のテキスト'
+  end
+
+  scenario 'four cards are shuffled', js: true do
+    # create four new cards and confirm shown in order
+    click_on 'New'
+    find('#input_japanese_text').set('1つ目のテキスト')
+    find('#input_english_text').set('first text')
+    click_on 'Submit'
+    find('#input_japanese_text').set('2つ目のテキスト')
+    find('#input_english_text').set('second text')
+    click_on 'Submit'
+    find('#input_japanese_text').set('3つ目のテキスト')
+    find('#input_english_text').set('third text')
+    click_on 'Submit'
+    find('#input_japanese_text').set('4つ目のテキスト')
+    find('#input_english_text').set('fourth text')
+    click_on 'Submit'
+    expect(page.text).to match /4(.*\n)3(.*\n)2(.*\n)1/
+    expect(page.text).not_to match /1(.*\n)2(.*\n)3(.*\n)4/
+
+    # shuffle
+    click_on 'Sort'
+    click_on 'shuffle'
+    expect(page.text).not_to match /4(.*\n)3(.*\n)2(.*\n)1/
   end
 end

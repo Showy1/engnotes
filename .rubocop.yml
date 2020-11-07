@@ -117,9 +117,6 @@ Style/SymbolArray:
 Bundler/OrderedGems:
   Enabled: false
 
-Style/GlobalVars:
-  Enabled: false
-
 # RSpec
 RSpec/ContextWording:
   Enabled: false
