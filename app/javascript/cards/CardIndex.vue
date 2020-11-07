@@ -1,44 +1,65 @@
 <template>
   <div id="app">
     <b-container>
-      <card-form @add="addCard" />
-
-      <b-form @reset="onReset">
-        <b-form-input id="input_search" v-model="keyword" type="text" />
-        <b-button id="search_reset" type="reset" variant="danger">
-          Reset
-        </b-button>
-      </b-form>
-
-      <b-tabs
-        active-nav-item-class="font-weight-bold text-uppercase text-danger"
-        active-tab-class="font-weight-bold text-success"
-        content-class="mt-3"
-      >
-        <b-tab title="Undone" active>
-          <card-table
-            :filtered-cards="filter(filteredCards, false)"
-            @update="updateCard"
-            @destroy="destroyCard"
-            @done="done"
-            @link="link"
-          />
-        </b-tab>
-        <b-tab title="Done" @click="get">
-          <card-table
-            :filtered-cards="filter(filteredCards, true)"
-            @update="updateCard"
-            @destroy="destroyCard"
-          />
-        </b-tab>
-      </b-tabs>
+      <b-card no-body>
+        <b-tabs pills card>
+          <b-tab title="Top" active>
+            Hello
+          </b-tab>
+          <!-- new card form -->
+          <b-tab title="New">
+            <card-form @add="addCard" />
+          </b-tab>
+          <!-- search -->
+          <b-tab title="Search">
+            <b-form @reset="onReset">
+              <b-form-group>
+                <b-form-input id="input_search" v-model="keyword" type="text" />
+              </b-form-group>
+              <b-button id="search_reset" type="reset" variant="danger">
+                Reset
+              </b-button>
+            </b-form>
+          </b-tab>
+          <!-- card -->
+          <b-tab title="Sort">
+            <!-- shuffle card -->
+            <b-button variant="dark" @click="shuffle">
+              shuffle
+            </b-button>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+      <!-- card table -->
+      <b-card no-body>
+        <b-tabs pills card>
+          <b-tab title="Undone" active @click="get">
+            <card-table
+              :filtered-cards="filter(filteredCards, false)"
+              @update="updateCard"
+              @destroy="destroyCard"
+              @redo="redo"
+              @done="done"
+              @link="link"
+            />
+          </b-tab>
+          <b-tab title="Done" @click="get">
+            <card-table
+              :filtered-cards="filter(filteredCards, true)"
+              @update="updateCard"
+              @destroy="destroyCard"
+              @redo="redo"
+            />
+          </b-tab>
+        </b-tabs>
+      </b-card>
     </b-container>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import {reject, filter} from 'lodash';
+import {reject, filter, shuffle} from 'lodash';
 import Autolinker from 'autolinker';
 
 import CardForm from '../cards/CardForm.vue';
@@ -77,7 +98,7 @@ export default {
         .then(res => (this.cards = res.data));
     },
     addCard(card) {
-      this.cards.push(card);
+      this.cards.unshift(card);
     },
     updateCard(card) {
       axios.patch('/api/v1/cards/' + card.id, {card: card})
@@ -95,17 +116,30 @@ export default {
           }
         });
     },
+    shuffle() {
+      this.cards = shuffle(this.cards);
+    },
+    redo(card) {
+      axios.patch('/api/v1/cards/' + card.id, {
+        phase: 0,
+        done: false,
+      }).then(res => {
+        if (res.status === 200) {
+          this.cards = reject(this.cards, ['id', card.id]);
+          console.log(res);
+        }
+      });
+    },
     done(card) {
       axios.patch('/api/v1/cards/' + card.id, {
         done: true,
         done_time: document.getElementById('current_server_date').value
-      })
-        .then(res => {
-          if (res.status === 200) {
-            this.cards = reject(this.cards, ['id', card.id]);
-            console.log(res);
-          }
-        });
+      }).then(res => {
+        if (res.status === 200) {
+          this.cards = reject(this.cards, ['id', card.id]);
+          console.log(res);
+        }
+      });
     },
     filter(cards, boolean) {
       return filter(cards, ['done', boolean]);

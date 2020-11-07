@@ -61,10 +61,21 @@
           <b-button variant="danger" @click="$emit('destroy', card)">
             delete
           </b-button>
+          <!-- redo -->
+          <b-button variant="warning" @click="$emit('redo', card)">
+            redo
+          </b-button>
           <!-- done -->
           <b-button variant="success" @click="$emit('done', card)">
             done
           </b-button>
+          <!-- review timing -->
+          <div v-if="reviewTiming[card.phase] == 1">
+            shown tomorrow
+          </div>
+          <div v-else>
+            shown {{ reviewTiming[card.phase] }} days later
+          </div>
         </b-card-body>
       </b-collapse>
     </b-card>
@@ -78,6 +89,11 @@ export default {
       type: Array,
       default: () => []
     }
+  },
+  data() {
+    return {
+      reviewTiming: document.getElementById('review_timings').value.split(',')
+    };
   },
   methods: {
     speak(english_text){
