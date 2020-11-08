@@ -5,18 +5,31 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%= javascript_pack_tag 'application' %>
+    <%= stylesheet_pack_tag 'application' %>
+    <% # ref. cards/index.html.erb  %>
     <%= yield :pack %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <header></header>
+    <div class="container mt-5">
+      <div class="flash">
+        <% if notice %>
+          <p class="notice text-info"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert text-danger"><%= alert %></p>
+        <% end %>
+      </div>
 
-    <% if user_signed_in? %>
-      <p>Hey, <%= current_user.username %></p>
-      <p><%= link_to "Logout", destroy_user_session_path, method: :delete %></p>
-    <% end %>
+      <% if user_signed_in? %>
+        <p>Hello, <%= current_user.username %></p>
+        <p><%= link_to "Edit", edit_user_registration_path, method: :get %></p>
+        <p><%= link_to "Logout", destroy_user_session_path, method: :delete %></p>
+      <% end %>
 
-    <%= yield %>
+      <%= yield %>
+    </div>
   </body>
 </html>
