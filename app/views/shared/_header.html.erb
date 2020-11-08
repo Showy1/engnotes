@@ -8,6 +8,8 @@
       <span>Hello, <%= current_user.username %></span>
       <%= link_to "UserEdit", edit_user_registration_path, method: :get %>
       <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= link_to 'Guest Log in', users_guest_sign_in_path, method: :post %>
     <% end %>
   </div>
 </header>

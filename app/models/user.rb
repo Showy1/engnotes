@@ -15,6 +15,13 @@ class User < ApplicationRecord
       find_by(conditions)
     end
   end
+
+  def self.guest
+    find_or_create_by!(username: 'guest', email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+      user.confirmed_at = DateTime.now
+    end
+  end
 end
 
 # == Schema Information
