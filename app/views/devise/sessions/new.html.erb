@@ -8,11 +8,13 @@
         <h2>Log in</h2>
 
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="field mb-2">
+        <div class="field" style="margin-top: -20px;">
+          <%= f.label :login, class: "d-none" %><br />
           <%= f.text_field :login, autofocus: true, autocomplete: "login", placeholder: "username or email@example.com", class: "w-100" %>
         </div>
 
-        <div class="field mb-2">
+        <div class="field mb-1" style="margin-top: -20px;">
+          <%= f.label :password, class: "d-none" %><br />
           <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "w-100" %>
         </div>
 

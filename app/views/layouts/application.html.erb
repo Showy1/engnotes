@@ -12,24 +12,23 @@
   </head>
 
   <body>
-    <header></header>
-    <div class="container mt-5">
-      <div class="flash">
-        <% if notice %>
-          <p class="notice text-info"><%= notice %></p>
-        <% end %>
-        <% if alert %>
-          <p class="alert text-danger"><%= alert %></p>
-        <% end %>
+    <div class="wapper position-relative" style="min-height: 100vh; padding-bottom: 50px; box-sizing: border-box;">
+      <%= render 'shared/header' %>
+
+      <div class="container my-5">
+        <div class="flash">
+          <% if notice %>
+            <p class="notice text-info"><%= notice %></p>
+          <% end %>
+          <% if alert %>
+            <p class="alert text-danger"><%= alert %></p>
+          <% end %>
+        </div>
+
+        <%= yield %>
       </div>
 
-      <% if user_signed_in? %>
-        <p>Hello, <%= current_user.username %></p>
-        <p><%= link_to "Edit", edit_user_registration_path, method: :get %></p>
-        <p><%= link_to "Logout", destroy_user_session_path, method: :delete %></p>
-      <% end %>
-
-      <%= yield %>
+      <%= render 'shared/footer' %>
     </div>
   </body>
 </html>
