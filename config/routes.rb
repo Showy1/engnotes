@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       resources :cards
     end
   end
+
+  get '*path' => redirect('/')
 end
 
 # == Route Map
