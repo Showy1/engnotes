@@ -48,7 +48,9 @@ RSpec.feature 'Cards', type: :feature do
     expect(page).to have_content 'delete'
 
     # delete card and confirm it
-    click_on 'delete'
+    page.accept_confirm do
+      click_on 'delete'
+    end
     expect(page).not_to have_content 'テキスト'
   end
 
@@ -181,12 +183,12 @@ RSpec.feature 'Cards', type: :feature do
     find('#input_japanese_text').set('4つ目のテキスト')
     find('#input_english_text').set('fourth text')
     click_on 'Submit'
-    expect(page.text).to match /4(.*\n)3(.*\n)2(.*\n)1/
-    expect(page.text).not_to match /1(.*\n)2(.*\n)3(.*\n)4/
+    expect(page.text).to match(/4(.*\n)3(.*\n)2(.*\n)1/)
+    expect(page.text).not_to match(/1(.*\n)2(.*\n)3(.*\n)4/)
 
     # shuffle
     click_on 'Sort'
     click_on 'shuffle'
-    expect(page.text).not_to match /4(.*\n)3(.*\n)2(.*\n)1/
+    expect(page.text).not_to match(/4(.*\n)3(.*\n)2(.*\n)1/)
   end
 end
