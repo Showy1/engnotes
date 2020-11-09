@@ -4,7 +4,8 @@
     "plugin:vue/recommended"
   ],
   "env": {
-    "node": true
+    "node": true,
+    "jquery": true
   },
   "rules": {
     "semi": "error",
