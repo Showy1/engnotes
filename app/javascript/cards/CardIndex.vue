@@ -106,12 +106,14 @@ export default {
         });
     },
     destroyCard(card) {
-      axios.delete('/api/v1/cards/' + card.id)
-        .then(res => {
-          if (res.status === 200){
-            this.cards = reject(this.cards, ['id', card.id]);
-          }
-        });
+      if (confirm('Are you sure you want to delete this card?')){
+        axios.delete('/api/v1/cards/' + card.id)
+          .then(res => {
+            if (res.status === 200){
+              this.cards = reject(this.cards, ['id', card.id]);
+            }
+          });
+      }
     },
     shuffle() {
       this.cards = shuffle(this.cards);
