@@ -19,7 +19,6 @@
           variant="info"
           class="position-relative"
           block
-          @click="$emit('link', card)"
         >
           {{ card.japanese_text }}
           <b-collapse :id="'collapse-' + card.id" class="position-absolute">
@@ -42,7 +41,8 @@
             </b-collapse>
           </b-card-text>
           <!-- source -->
-          <b-card-text :id="'source' + card.id" class="position-relative" v-html="card.source">
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <b-card-text :id="'source' + card.id" class="position-relative" v-html="link(card.source)">
             <b-collapse :id="'collapse-' + card.id" class="position-absolute">
               <b-form-input v-model="card.source" @blur="$emit('update', card)" />
             </b-collapse>
@@ -83,7 +83,18 @@
 </template>
 
 <script>
+import Autolinker from 'autolinker';
+import sanitizeHTML from 'sanitize-html';
+
+var autolinker = new Autolinker( {
+  email       : false,
+  phone       : false,
+  stripPrefix : false,
+});
+
 export default {
+  filters: {
+  },
   props: {
     filteredCards: {
       type: Array,
@@ -101,19 +112,22 @@ export default {
       speak.text = english_text;
       speak.lang = 'en';
       speechSynthesis.speak(speak);
+    },
+    link(source) {
+      return sanitizeHTML(autolinker.link(source));
     }
   }
 };
 </script>
 
 <style scoped>
-  .position-relative{
-    height: calc(1.5em + 0.75rem + 2px);
-    padding: 0.375rem 0.75rem;
-  }
+.position-relative{
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+}
 
-  .position-absolute{
-    top: -1px;
-    left: -1px;
-  }
+.position-absolute{
+  top: -1px;
+  left: -1px;
+}
 </style>
