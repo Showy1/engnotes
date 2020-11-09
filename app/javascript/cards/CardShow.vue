@@ -18,9 +18,8 @@
       <dt class="col-sm-3">
         source
       </dt>
-      <dd class="col-sm-9">
-        {{ card.source }}
-      </dd>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <dd class="col-sm-9" v-html="link(card.source)" />
 
       <dt class="col-sm-3">
         user
@@ -56,6 +55,14 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
+import Autolinker from 'autolinker';
+import sanitizeHTML from 'sanitize-html';
+
+var autolinker = new Autolinker( {
+  email       : false,
+  phone       : false,
+  stripPrefix : false,
+});
 
 export default {
   filters: {
@@ -71,6 +78,11 @@ export default {
   mounted() {
     axios.get(`/api/v1/cards/${this.$route.params.id}.json`)
       .then(res => (this.card = res.data));
+  },
+  methods: {
+    link(source) {
+      return sanitizeHTML(autolinker.link(source));
+    }
   }
 };
 </script>

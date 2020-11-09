@@ -40,7 +40,6 @@
               @destroy="destroyCard"
               @redo="redo"
               @done="done"
-              @link="link"
             />
           </b-tab>
           <b-tab title="Done" @click="get">
@@ -60,7 +59,6 @@
 <script>
 import axios from 'axios';
 import {reject, filter, shuffle} from 'lodash';
-import Autolinker from 'autolinker';
 
 import CardForm from '../cards/CardForm.vue';
 import CardTable from '../cards/CardTable.vue';
@@ -89,7 +87,6 @@ export default {
     }
   },
   mounted() {
-    // source1.innerHTML = Autolinker.link(this.$refs.source1.innerHTML);
     this.get();
   },
   methods: {
@@ -143,9 +140,6 @@ export default {
     },
     filter(cards, boolean) {
       return filter(cards, ['done', boolean]);
-    },
-    link(card) {
-      card.source = Autolinker.link(card.source);
     },
     onReset(evt) {
       evt.preventDefault();
