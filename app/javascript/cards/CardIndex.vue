@@ -33,7 +33,7 @@
       <!-- card table -->
       <b-card no-body>
         <b-tabs pills card>
-          <b-tab title="Undone" active @click="get">
+          <b-tab title="Undone" active @click="get" class="p-0">
             <card-table
               :filtered-cards="filter(filteredCards, false)"
               @update="updateCard"
@@ -42,7 +42,7 @@
               @done="done"
             />
           </b-tab>
-          <b-tab title="Done" @click="get">
+          <b-tab title="Done" @click="get" class="p-0">
             <card-table
               :filtered-cards="filter(filteredCards, true)"
               @update="updateCard"
