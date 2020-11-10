@@ -1,5 +1,5 @@
 <template id="">
-  <div class="container">
+  <div>
     <dl class="row">
       <dt class="col-sm-3">
         japanese
@@ -22,17 +22,15 @@
       <dd class="col-sm-9" v-html="link(card.source)" />
 
       <dt class="col-sm-3">
-        user
-      </dt>
-      <dd class="col-sm-9">
-        {{ card.user_id }}
-      </dd>
-
-      <dt class="col-sm-3">
         done
       </dt>
       <dd class="col-sm-9">
-        {{ card.done_time | moment }}
+        <span v-if="card.done_time">
+          {{ card.done_time | moment }}
+        </span>
+        <span v-else>
+          never done
+        </span>
       </dd>
 
       <dt class="col-sm-3">
@@ -49,6 +47,12 @@
         {{ card.updated_at | moment }}
       </dd>
     </dl>
+
+    <router-link to="/">
+      <b-button variant="dark">
+        back
+      </b-button>
+    </router-link>
   </div>
 </template>
 
