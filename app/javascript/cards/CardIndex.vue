@@ -27,6 +27,14 @@
             <b-button variant="dark" @click="shuffle">
               shuffle
             </b-button>
+            <!-- newest to oldest -->
+            <b-button variant="dark" @click="newest">
+              newest
+            </b-button>
+            <!-- oldest to newest -->
+            <b-button variant="dark" @click="oldest">
+              oldest
+            </b-button>
           </b-tab>
         </b-tabs>
       </b-card>
@@ -63,7 +71,7 @@
 
 <script>
 import axios from 'axios';
-import {reject, filter, shuffle} from 'lodash';
+import {reject, filter, shuffle, orderBy} from 'lodash';
 
 import CardForm from '../cards/CardForm.vue';
 import CardTable from '../cards/CardTable.vue';
@@ -103,12 +111,7 @@ export default {
       this.cards.unshift(card);
     },
     updateCard(card) {
-      axios.patch('/api/v1/cards/' + card.id, {card: card})
-        .then(res => {
-          if (res.status === 200) {
-            console.log(res);
-          }
-        });
+      axios.patch('/api/v1/cards/' + card.id, {card: card});
     },
     destroyCard(card) {
       if (confirm('Are you sure you want to delete this card?')){
@@ -123,6 +126,12 @@ export default {
     shuffle() {
       this.cards = shuffle(this.cards);
     },
+    newest() {
+      this.cards = orderBy(this.cards, 'id', 'desc');
+    },
+    oldest() {
+      this.cards = orderBy(this.cards, 'id', 'asc');
+    },
     redo(card) {
       axios.patch('/api/v1/cards/' + card.id, {
         phase: 0,
@@ -130,7 +139,6 @@ export default {
       }).then(res => {
         if (res.status === 200) {
           this.cards = reject(this.cards, ['id', card.id]);
-          console.log(res);
         }
       });
     },
@@ -141,7 +149,6 @@ export default {
       }).then(res => {
         if (res.status === 200) {
           this.cards = reject(this.cards, ['id', card.id]);
-          console.log(res);
         }
       });
     },
