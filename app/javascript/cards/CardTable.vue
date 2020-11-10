@@ -43,7 +43,7 @@
           </div>
           <!-- source -->
           <div class="position-relative mb-2">
-            <b-collapse :id="'collapse-' + card.id" class="position-absolute card-inner-input">
+            <b-collapse v-if="card.source" :id="'collapse-' + card.id" class="position-absolute card-inner-input">
               <b-form-input v-model="card.source" @blur="$emit('update', card)" />
             </b-collapse>
             <!-- eslint-disable-next-line vue/no-v-html -->
