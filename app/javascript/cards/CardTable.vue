@@ -74,16 +74,26 @@
                   redo
                 </b-button>
                 <!-- done -->
-                <b-button variant="success" @click="$emit('done', card)">
+                <b-button v-if="!(card.done)" variant="success" @click="$emit('done', card)">
                   done
                 </b-button>
               </b-button-group>
               <!-- review timing -->
-              <div v-if="reviewTiming[card.phase] == 1">
-                shown tomorrow
+              <div v-if="!(card.done)">
+                <div v-if="reviewTimings[card.phase] == 1">
+                  shown tomorrow
+                </div>
+                <div v-else>
+                  shown {{ reviewTimings[card.phase] }} days later
+                </div>
               </div>
               <div v-else>
-                shown {{ reviewTiming[card.phase] }} days later
+                <div v-if="reviewTiming(card.phase, card.done_time) == 1">
+                  shown tomorrow
+                </div>
+                <div v-else>
+                  shown {{ reviewTiming(card.phase, card.done_time) }} days later
+                </div>
               </div>
             </div>
           </div>
@@ -96,6 +106,7 @@
 <script>
 import Autolinker from 'autolinker';
 import sanitizeHTML from 'sanitize-html';
+import moment from 'moment';
 
 var autolinker = new Autolinker( {
   email       : false,
@@ -112,8 +123,11 @@ export default {
   },
   data() {
     return {
-      reviewTiming: document.getElementById('review_timings').value.split(','),
+      reviewTimings: document.getElementById('review_timings').value.split(','),
     };
+  },
+  computed: {
+
   },
   methods: {
     speak(english_text) {
@@ -125,6 +139,11 @@ export default {
     link(source) {
       return sanitizeHTML(autolinker.link(source));
     },
+    reviewTiming(phase, done_time) {
+      var today = moment(document.getElementById('current_server_date').value);
+      var done = moment(done_time);
+      return this.reviewTimings[phase] - today.diff(done, 'days');
+    }
   }
 };
 </script>
