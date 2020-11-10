@@ -69,28 +69,44 @@ RSpec.feature 'Cards', type: :feature do
     expect(page).to have_content 'text'
     expect(page).to have_content 'done'
 
-    # done and confirm unshown
+    # done and confirm unshown / 1st day
     click_on 'done'
     expect(page).not_to have_content 'テキスト'
     visit current_path
     expect(page).not_to have_content 'テキスト'
 
-    # a day later
+    # shown a day later / 2nd day
     travel 1.day
     visit current_path
     expect(page).to have_content 'テキスト'
     click_on 'テキスト'
     expect(page).to have_content 'text'
     expect(page).to have_content 'done'
+    expect(page).to have_content 'shown 4 days later'
     click_on 'done'
     expect(page).not_to have_content 'テキスト'
 
-    # 3 days later
-    travel 3.days
+    # not shown a day later / 3rd day
+    travel 1.day
     visit current_path
     expect(page).not_to have_content 'テキスト'
+    click_on 'Done'
+    expect(page).to have_content 'テキスト'
+    click_on 'テキスト'
+    expect(page).to have_content 'text'
+    expect(page).to have_content 'shown 3 days later'
 
-    # a day later
+    # not shown 2 days later / 5th day
+    travel 2.days
+    visit current_path
+    expect(page).not_to have_content 'テキスト'
+    click_on 'Done'
+    expect(page).to have_content 'テキスト'
+    click_on 'テキスト'
+    expect(page).to have_content 'text'
+    expect(page).to have_content 'shown tomorrow'
+
+    # shown a day later / 6th day
     travel 1.day
     visit current_path
     expect(page).to have_content 'テキスト'
