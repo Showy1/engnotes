@@ -1,17 +1,26 @@
-<header class="bg-light border-bottom", style="height: 50px;">
-  <div class="header-left float-left ml-3">
-    <%= link_to '/', class: "text-dark text-decoration-none" do %>
-      <i class="fas fa-sticky-note fa-2x"></i>
-      <h1 class="d-inline">EngNotes</h1>
-    <% end %>
-  </div>
-  <div class="header-right float-right mr-3 mt-3" style="font-size: 1.2rem;">
-    <% if user_signed_in? %>
-      <span class="mr-2">Hello, <%= current_user.username %></span>
-      <%= link_to "EditUser", edit_user_registration_path, class: "mr-2", method: :get %>
-      <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "GuestLogin", users_guest_sign_in_path, class: "text-danger font-weight-bold", method: :post %>
-    <% end %>
-  </div>
+<header class="bg-light border-bottom">
+  <nav class="navbar navbar-expand-sm d-flex justify-content-between">
+    <div class="header-left ml-1 navbar-brand">
+      <%= link_to '/', class: "text-dark text-decoration-none" do %>
+        <i class="fas fa-sticky-note fa-2x"></i>
+        <h1 class="d-inline" style="font-size: 2.4rem;">EngNotes</h1>
+      <% end %>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <!-- <span class="navbar-toggler-icon"></span> -->
+      <i class="fas fa-bars fa-2x text-dark"></i>
+    </button>
+
+    <div class="header-right mt-3 collapse navbar-collapse " style="font-size: 1.2rem;" id="navbarToggler">
+      <div class="ml-auto mr-0 text-right">
+        <% if user_signed_in? %>
+        <span class="mr-2">Hello, <%= current_user.username %></span>
+        <%= link_to "EditUser", edit_user_registration_path, class: "mr-2", method: :get %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+        <% else %>
+        <%= link_to "GuestLogin", users_guest_sign_in_path, class: "text-danger font-weight-bold", method: :post %>
+        <% end %>
+      </div>
+    </div>
+  </nav>
 </header>
