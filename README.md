@@ -1,24 +1,48 @@
-# README
+# README APP Title
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 概要
+英語フレーズ暗記用のWebアプリです。  
+英文読み上げ機能を有する英語暗記カードを作成できます。  
+確認した暗記カードを数日後に再表示し、フレーズを定着させます。
 
-Things you may want to cover:
+主に **Ruby (2.7), Rails (6.0), Vue.js (2.6)** を使用しました。
 
-* Ruby version
+## 機能および主要関連技術
 
-* System dependencies
+* 暗記カードのCRUD / 暗記カード確認後、数日後に再表示 - **Vue.js, Ruby on Rails, axios**
 
-* Configuration
+* ユーザーのCRUDとメール認証 / ゲストログイン - **devise**
 
-* Database creation
+* 英文読み上げ - Web Speech API
 
-* Database initialization
+* 暗記カードの検索 - Vue.js
 
-* How to run the test suite
+* 暗記カードのソート - Vue.js, Lodash
 
-* Services (job queues, cache servers, search engines, etc.)
+## 開発用技術
 
-* Deployment instructions
+* テスト - **RSpec, Capybara**
 
-* ...
+* 静的テスト - **RuboCop, ESLint**
+
+* models等への自動コメント - annotate
+
+## インフラ構成
+
+<div style="color: red;">要追加</div>
+
+## 技術一覧
+
+* フロントエンド - **Vue.js,** Vue Router, **axios, Webpacker,** BootstrapVue, Lodash, Moment.js, sanitize-html, Bootstrap, Font Awesome, jQuery, ESLint
+
+* バックエンド - **Ruby on Rails, MySQL, devise, RSpec, Capybara,** RuboCop
+
+* インフラ - **AWS (EC2, VPC), Docker,** Puma, NGINX
+
+## インストール
+
+```
+$ git clone https://github.com/Showy1/memorization_app.git
+$ cd memorization_app
+$ docker-compose build
+```
