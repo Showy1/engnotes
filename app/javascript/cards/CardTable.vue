@@ -11,7 +11,8 @@
         header-tag="header"
         class="p-1 position-relative"
         role="tab"
-        @keyup.enter="$emit('done', card)"
+        @keyup.enter.ctrl="$emit('done', card)"
+        @keyup.82="$emit('redo', card)"
         @keyup.83="speak(card.english_text)"
       >
         <b-collapse :id="'collapse-' + card.id" class="position-absolute w-100" style="top: 4px; left: 0;">
