@@ -64,8 +64,8 @@
             <!-- eslint-disable-next-line vue/no-v-html -->
             <b-card-text :id="'source' + card.id" v-html="link(card.source)" />
           </div>
-          <div class="d-flex justify-content-between">
-            <div class="buttons-left">
+          <div class="row">
+            <div class="buttons-left col-sm-7 mb-2 pl-4">
               <!-- edit -->
               <b-button v-b-toggle="'collapse-' + card.id" variant="dark">
                 edit
@@ -82,32 +82,34 @@
               </b-button>
             </div>
 
-            <div class="buttons-right">
-              <b-button-group size="lg">
-                <!-- redo -->
-                <b-button variant="warning" @click="$emit('redo', card)">
-                  redo
-                </b-button>
-                <!-- done -->
-                <b-button v-if="!(card.done)" variant="success" @click="$emit('done', card)">
-                  done
-                </b-button>
-              </b-button-group>
-              <!-- review timing -->
-              <div v-if="!(card.done)">
-                <div v-if="reviewTimings[card.phase] == 1">
-                  shown tomorrow
+            <div class="buttons-right col-sm-5 pr-4">
+              <div class="text-right">
+                <b-button-group size="lg" class="mb-2">
+                  <!-- redo -->
+                  <b-button variant="warning" @click="$emit('redo', card)">
+                    redo
+                  </b-button>
+                  <!-- done -->
+                  <b-button v-if="!(card.done)" variant="success" @click="$emit('done', card)">
+                    done
+                  </b-button>
+                </b-button-group>
+                <!-- review timing -->
+                <div v-if="!(card.done)">
+                  <div v-if="reviewTimings[card.phase] == 1">
+                    shown tomorrow
+                  </div>
+                  <div v-else>
+                    shown {{ reviewTimings[card.phase] }} days later
+                  </div>
                 </div>
                 <div v-else>
-                  shown {{ reviewTimings[card.phase] }} days later
-                </div>
-              </div>
-              <div v-else>
-                <div v-if="reviewTiming(card.phase, card.done_time) == 1">
-                  shown tomorrow
-                </div>
-                <div v-else>
-                  shown {{ reviewTiming(card.phase, card.done_time) }} days later
+                  <div v-if="reviewTiming(card.phase, card.done_time) == 1">
+                    shown tomorrow
+                  </div>
+                  <div v-else>
+                    shown {{ reviewTiming(card.phase, card.done_time) }} days later
+                  </div>
                 </div>
               </div>
             </div>
