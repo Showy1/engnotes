@@ -41,10 +41,24 @@
               </b-button>
             </b-card-text>
           </div>
+          <!-- note -->
+          <div class="position-relative mb-5">
+            <b-collapse :id="'collapse-' + card.id" class="position-absolute card-inner-input">
+              <b-form-textarea
+                v-model="card.note"
+                placeholder="Enter note"
+                no-resize
+                @blur="$emit('update', card)"
+              />
+            </b-collapse>
+            <b-card-text :id="'note' + card.id">
+              {{ card.note }}
+            </b-card-text>
+          </div>
           <!-- source -->
-          <div class="position-relative mb-2">
-            <b-collapse v-if="card.source" :id="'collapse-' + card.id" class="position-absolute card-inner-input">
-              <b-form-input v-model="card.source" @blur="$emit('update', card)" />
+          <div class="position-relative mb-4">
+            <b-collapse :id="'collapse-' + card.id" class="position-absolute card-inner-input">
+              <b-form-input v-model="card.source" placeholder="Enter source" @blur="$emit('update', card)" />
             </b-collapse>
             <!-- eslint-disable-next-line vue/no-v-html -->
             <b-card-text :id="'source' + card.id" v-html="link(card.source)" />

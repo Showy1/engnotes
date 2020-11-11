@@ -7,7 +7,7 @@
           v-model="card.japanese_text"
           type="text"
           required
-          placeholder="Enter Japanese text"
+          placeholder="Enter Japanese text *required"
         />
       </b-form-group>
 
@@ -17,7 +17,17 @@
           v-model="card.english_text"
           type="text"
           required
-          placeholder="Enter English text"
+          placeholder="Enter English text *required"
+        />
+      </b-form-group>
+
+      <b-form-group label-for="textarea_note">
+        <b-form-textarea
+          id="textarea_note"
+          v-model="card.note"
+          type="text"
+          placeholder="Enter note"
+          no-resize
         />
       </b-form-group>
 
@@ -49,6 +59,7 @@ export default {
       card: {
         japaneseText: '',
         englishText: '',
+        note: '',
         source: '',
       }
     };
@@ -64,11 +75,11 @@ export default {
             this.card = {
               japaneseText: '',
               englishText: '',
+              note: '',
               source: '',
             };
             break;
           case 400:
-            console.log(res.data.message);
             break;
           }
         });
@@ -77,6 +88,7 @@ export default {
       evt.preventDefault();
       this.card.japanese_text = '';
       this.card.english_text = '';
+      this.card.note = '';
       this.card.source = '';
     }
   }
