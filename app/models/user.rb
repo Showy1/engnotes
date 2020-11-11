@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  validates :username, length: { minimum: 3, maximum: 20 }
+  validates :username, uniqueness: true, length: { minimum: 3, maximum: 20 }
 
   attr_accessor :login
 
