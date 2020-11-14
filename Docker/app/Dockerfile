@@ -8,9 +8,10 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 RUN mkdir -p /myapp
 WORKDIR /myapp
 
-ADD Gemfile /myapp/Gemfile
-ADD Gemfile.lock /myapp/Gemfile.lock
+COPY Gemfile /myapp/Gemfile
+COPY Gemfile.lock /myapp/Gemfile.lock
 
+RUN gem install sassc -v '2.4.0' --source 'https://rubygems.org/'
 RUN bundle install
 
 COPY . /myapp

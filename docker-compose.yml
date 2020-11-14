@@ -10,11 +10,15 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - mysql_data:/var/lib/mysql
+    cap_add:
+      - SYS_NICE
   app:
     build:
       context: .
       dockerfile: ./Docker/app/Dockerfile
-    command: bundle exec puma -C config/puma.rb
+    # command: bundle exec puma -C config/puma.rb
+    # production
+    command: bundle exec puma -e production -C config/puma.rb
     volumes:
       - .:/myapp
       - public_data:/myapp/public
