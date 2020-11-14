@@ -16,6 +16,7 @@ services:
     build:
       context: .
       dockerfile: ./Docker/app/Dockerfile
+    # development
     # command: bundle exec puma -C config/puma.rb
     # production
     command: bundle exec puma -e production -C config/puma.rb
@@ -31,14 +32,23 @@ services:
       context: .
       dockerfile: ./Docker/web/Dockerfile
     volumes:
+      # server ssl ->
+      - certs:/etc/letsencrypt
+      - certs-data:/var/lib/letsencrypt
+      # ->
       - public_data:/myapp/public
       - tmp_data:/myapp/tmp
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - app
 
 volumes:
+  # server ssl ->
+  certs:
+  certs-data:
+  # ->
   mysql_data:
   public_data:
   tmp_data:
