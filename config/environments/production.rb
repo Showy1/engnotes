@@ -44,6 +44,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # server
   # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
@@ -61,9 +62,24 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "memorization_app_production"
 
   # devise
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  # w/o Docker
+  # config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  # w/ Docker
+  config.action_mailer.default_url_options = { host: 'localhost' }
+  # server
+  # config.action_mailer.default_url_options = { host: 'engnotes.net' }
 
   config.action_mailer.perform_caching = false
+
+  config.action_mailer.smtp_settings = {
+    enable_starttls_auto: true,
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'smtp.gmail.com',
+    user_name: 'example@email.com',
+    password: 'examplePassword',
+    authentication: 'login'
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

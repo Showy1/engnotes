@@ -33,21 +33,23 @@ services:
       dockerfile: ./Docker/web/Dockerfile
     volumes:
       # server ssl ->
-      - certs:/etc/letsencrypt
-      - certs-data:/var/lib/letsencrypt
+      # - certs:/etc/letsencrypt
+      # - certs-data:/var/lib/letsencrypt
       # ->
       - public_data:/myapp/public
       - tmp_data:/myapp/tmp
     ports:
       - 80:80
-      - 443:443
+      # server ssl ->
+      # - 443:443
+      # ->
     depends_on:
       - app
 
 volumes:
   # server ssl ->
-  certs:
-  certs-data:
+  # certs:
+  # certs-data:
   # ->
   mysql_data:
   public_data:
