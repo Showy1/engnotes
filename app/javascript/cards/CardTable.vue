@@ -12,8 +12,8 @@
         class="p-1 position-relative"
         role="tab"
         @keyup.enter.ctrl="$emit('done', card)"
-        @keyup.82="$emit('redo', card)"
-        @keyup.83="speak(card.english_text)"
+        @keyup.82.ctrl="$emit('redo', card)"
+        @keyup.83.ctrl="speak(card.english_text)"
       >
         <b-collapse :id="'collapse-' + card.id" class="position-absolute w-100" style="top: 4px; left: 0;">
           <b-form-input v-model="card.japanese_text" class="text-center" @blur="$emit('update', card)" />
