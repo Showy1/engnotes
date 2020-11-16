@@ -42,7 +42,7 @@ Rails/LexicallyScopedActionFilter:
   Exclude:
     - 'app/controllers/users/*'
 
-## `and return` の形式を利用できるようにします。基本的には、&& と || を使います。
+## `and return`
 Style/AndOr:
   Enabled: false
 
@@ -105,6 +105,9 @@ Metrics/MethodLength:
 
 Metrics/ModuleLength:
   CountComments: false
+
+Metrics/BlockLength:
+  Enabled: false
 
 Naming/FileName:
   Exclude:

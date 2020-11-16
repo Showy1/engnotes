@@ -1,39 +1,36 @@
-<div class="card mb-3 mx-auto mw-100">
-  <div class="row no-gutters">
-    <div class="col-md-6">
-      <%= image_pack_tag 'thank_you.jpg', class: "m-auto w-100" %>
+<div class="card mb-3 mx-auto" style="max-width: 500px; background: rgba(255, 255, 255, .8);">
+  <%= image_pack_tag 'notes.jpg', class: "position-fixed", style: "min-width: 100vw; top: 0; right: 0; min-height: calc(100vh - 50px); opacity: .4; z-index: -1;"%>
+  <div class="card-body border-bottom">
+    <h2 style="font-size: 1.6rem;">Memorize English phrase</h2>
+  </div>
+  <div class="card-body border-bottom">
+    <h2>Log in</h2>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="field" style="margin-top: -20px;">
+      <%= f.label :login, class: "d-none" %><br />
+      <%= f.text_field :login, autofocus: true, autocomplete: "login", placeholder: "username or email@example.com", class: "w-100" %>
     </div>
-    <div class="col-md-6">
-      <div class="card-body border-bottom">
-        <h2>Log in</h2>
 
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="field" style="margin-top: -20px;">
-          <%= f.label :login, class: "d-none" %><br />
-          <%= f.text_field :login, autofocus: true, autocomplete: "login", placeholder: "username or email@example.com", class: "w-100" %>
-        </div>
-
-        <div class="field mb-1" style="margin-top: -20px;">
-          <%= f.label :password, class: "d-none" %><br />
-          <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "w-100" %>
-        </div>
-
-        <% if devise_mapping.rememberable? %>
-        <div class="field">
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
-        </div>
-        <% end %>
-
-        <div class="actions">
-          <%= f.submit "Log in", class: "btn btn-primary" %>
-        </div>
-        <% end %>
-      </div>
-
-      <div class="card-body ">
-        <%= render "devise/shared/links" %>
-      </div>
+    <div class="field mb-1" style="margin-top: -20px;">
+      <%= f.label :password, class: "d-none" %><br />
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: "password", class: "w-100" %>
     </div>
+
+    <% if devise_mapping.rememberable? %>
+    <div class="field">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "Log in", class: "btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="card-body">
+    <%= render "devise/shared/links" %>
   </div>
 </div>
