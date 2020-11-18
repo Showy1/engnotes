@@ -1,6 +1,6 @@
 # EngNotes
 
-画像クリックで公開先に飛びます。
+**画像クリックで公開先に飛びます。右上の "GuestLogin" からゲストログイン可能です。**
 
 [![top](https://user-images.githubusercontent.com/62195235/99233676-eb8a8180-2836-11eb-88ba-7f7acd5e033d.png)](https://engnotes.net)
 
