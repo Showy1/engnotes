@@ -1,5 +1,7 @@
 # EngNotes
 
+画像クリックで公開先に飛びます。
+
 [![top](https://user-images.githubusercontent.com/62195235/99233676-eb8a8180-2836-11eb-88ba-7f7acd5e033d.png)](https://engnotes.net)
 
 ## 目次
