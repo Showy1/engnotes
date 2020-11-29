@@ -3,6 +3,8 @@ class Card < ApplicationRecord
     validates :english_text
     validates :japanese_text
   end
+
+  belongs_to :user
 end
 
 # == Schema Information

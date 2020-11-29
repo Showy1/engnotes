@@ -20,7 +20,7 @@ class Api::V1::CardsController < ActionController::API
   end
 
   def show
-    render json: @card
+    render json: @card.to_json(:include => [user: {only: :username}])
   end
 
   def create
@@ -47,6 +47,7 @@ class Api::V1::CardsController < ActionController::API
     end
 
     def card_params
+      # permit to change values and add user_id
       params.require(:card).permit(:japanese_text, :english_text, :source, :phase, :note, :done, :done_time).merge(user_id: current_user.id)
     end
 
