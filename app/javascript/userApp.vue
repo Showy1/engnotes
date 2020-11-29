@@ -12,7 +12,7 @@ import CardIndex from 'cards/CardIndex.vue';
 import CardShow from 'cards/CardShow.vue';
 
 const routes = [
-  { path: '/guest', component: CardIndex },
+  { path: location.pathname, component: CardIndex },
   { path: '/:id(\\d+)', name: 'CardShow', component: CardShow },
 ];
 

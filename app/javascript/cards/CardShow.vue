@@ -74,11 +74,9 @@
       </div>
     </dl>
 
-    <router-link to="/">
-      <b-button variant="dark">
-        back
-      </b-button>
-    </router-link>
+    <b-button variant="dark" @click="$router.go(-1)">
+      back
+    </b-button>
   </div>
 </template>
 

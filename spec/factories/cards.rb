@@ -3,7 +3,6 @@ FactoryBot.define do
     english_text { 'ENGLISH_TEXT' }
     japanese_text { '日本語の文章' }
     source { 'https://example.com' }
-    user_id { 1 }
   end
 end
 
