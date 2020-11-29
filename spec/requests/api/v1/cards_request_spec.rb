@@ -8,15 +8,17 @@ RSpec.describe 'Api::V1::Cards', type: :request do
   # password {'password'}
 
   describe 'GET /api/v1/cards' do
-    it 'returns http internal server error without login' do
+    # it 'returns http internal server error without login' do
+    it 'returns http success without login' do
       get '/api/v1/cards'
-      expect(response).to have_http_status(:internal_server_error)
-    end
-
-    it 'returns http success' do
-      sign_in user
-      get '/api/v1/cards'
+      # expect(response).to have_http_status(:internal_server_error)
       expect(response).to have_http_status(:ok)
     end
+
+    # it 'returns http success' do
+    #   sign_in user
+    #   get '/api/v1/cards'
+    #   expect(response).to have_http_status(:ok)
+    # end
   end
 end

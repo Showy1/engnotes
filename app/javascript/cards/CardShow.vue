@@ -24,8 +24,8 @@
           source
         </dt>
         <dd class="col-sm-9">
-          <span v-if="card.source" v-html="link(card.source)" />
           <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-if="card.source" v-html="link(card.source)" />
           <span v-else>
             none
           </span>
@@ -50,7 +50,7 @@
         <dt class="col-sm-3">
           created by
         </dt>
-        <dd class="col-sm-9" v-if="!loading">
+        <dd v-if="!loading" class="col-sm-9">
           {{ card.user.username }}
         </dd>
       </div>

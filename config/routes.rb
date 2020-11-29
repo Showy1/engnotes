@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
   root 'cards#index'
+  get ':username', to: 'cards#user_index', as: :user
 
   devise_scope :user do
     post 'users/guest_sign_in', to: 'users/sessions#new_guest'
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
     namespace :v1 do
       resources :cards
+      get ':username/cards', to: 'cards#user_index', as: :user
     end
   end
 

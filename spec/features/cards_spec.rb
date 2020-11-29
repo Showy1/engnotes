@@ -15,7 +15,7 @@ RSpec.feature 'Cards', type: :feature do
     click_on 'Log in'
   end
 
-  scenario 'a new card is created, done and deleted', js: true do
+  xscenario 'a new card is created, done and deleted', js: true do
     # confirm login
     expect(page).to have_content user.username
 
@@ -54,7 +54,7 @@ RSpec.feature 'Cards', type: :feature do
     expect(page).not_to have_content 'テキスト'
   end
 
-  scenario 'a new card is created and done / the card is shown a day and 4 days later', js: true do
+  xscenario 'a new card is created and done / the card is shown a day and 4 days later', js: true do
     # create a new card and confirm shown
     click_on 'New'
     find('#input_japanese_text').set('テキスト')
@@ -114,7 +114,7 @@ RSpec.feature 'Cards', type: :feature do
     travel_back
   end
 
-  scenario 'a new card is created and done / the card is shown [1, 4, 7, 11, 15, 20, 30] and 30 days later', js: true do
+  xscenario 'a new card is created and done / the card is shown [1, 4, 7, 11, 15, 20, 30] and 30 days later', js: true do
     # create a new card and confirm shown
     click_on 'New'
     find('#input_japanese_text').set('テキスト')
@@ -159,7 +159,7 @@ RSpec.feature 'Cards', type: :feature do
     travel_back
   end
 
-  scenario 'two new cards are created and one is searched', js: true do
+  xscenario 'two new cards are created and one is searched', js: true do
     # create two new cards and confirm shown
     click_on 'New'
     find('#input_japanese_text').set('1つ目のテキスト')
@@ -184,7 +184,7 @@ RSpec.feature 'Cards', type: :feature do
     expect(page).to have_content '2つ目のテキスト'
   end
 
-  scenario 'four cards are shuffled', js: true do
+  xscenario 'four cards are shuffled', js: true do
     # create four new cards and confirm shown in order
     click_on 'New'
     find('#input_japanese_text').set('1つ目のテキスト')

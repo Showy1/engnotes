@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   validates :username, uniqueness: true, length: { minimum: 3, maximum: 20 }
 
-  has_many :cards
+  has_many :cards, dependent: :nullify
 
   attr_accessor :login
 

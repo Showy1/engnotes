@@ -5,10 +5,6 @@
         <b-tab title="Top" active>
           Hello. <strong>Please click "Help" tab as necessary.</strong>
         </b-tab>
-        <!-- new card form -->
-        <b-tab title="New">
-          <card-form @add="addCard" />
-        </b-tab>
         <!-- search -->
         <b-tab title="Search">
           <b-form @reset="onReset">
@@ -69,25 +65,13 @@
     <b-card no-body>
       <b-tabs pills card>
         <b-tab
-          title="Undone"
+          title="All"
           active
           class="p-0"
           @click="get"
         >
-          <card-table
+          <card-table-all
             :filtered-cards="filter(filteredCards, false)"
-            @update="updateCard"
-            @destroy="destroyCard"
-            @redo="redo"
-            @done="done"
-          />
-        </b-tab>
-        <b-tab title="Done" class="p-0" @click="get">
-          <card-table
-            :filtered-cards="filter(filteredCards, true)"
-            @update="updateCard"
-            @destroy="destroyCard"
-            @redo="redo"
           />
         </b-tab>
       </b-tabs>
@@ -97,15 +81,13 @@
 
 <script>
 import axios from 'axios';
-import {reject, filter, shuffle, orderBy} from 'lodash';
+import {filter, shuffle, orderBy} from 'lodash';
 
-import CardForm from '../cards/CardForm.vue';
-import CardTable from '../cards/CardTable.vue';
+import CardTableAll from '../cards/CardTableAll.vue';
 
 export default {
   components: {
-    CardForm,
-    CardTable
+    CardTableAll
   },
   data() {
     return {
@@ -129,27 +111,26 @@ export default {
     this.get();
   },
   methods: {
-    // get cards data from json
     get() {
-      axios.get('/api/v1' + location.pathname + '/cards.json')
+      axios.get('/api/v1/cards.json')
         .then(res => (this.cards = res.data));
     },
-    addCard(card) {
-      this.cards.unshift(card);
-    },
-    updateCard(card) {
-      axios.patch('/api/v1/cards/' + card.id, {card: card});
-    },
-    destroyCard(card) {
-      if (confirm('Are you sure you want to delete this card?')){
-        axios.delete('/api/v1/cards/' + card.id)
-          .then(res => {
-            if (res.status === 200){
-              this.cards = reject(this.cards, ['id', card.id]);
-            }
-          });
-      }
-    },
+    // addCard(card) {
+    //   this.cards.unshift(card);
+    // },
+    // updateCard(card) {
+    //   axios.patch('/api/v1/cards/' + card.id, {card: card});
+    // },
+    // destroyCard(card) {
+    //   if (confirm('Are you sure you want to delete this card?')){
+    //     axios.delete('/api/v1/cards/' + card.id)
+    //       .then(res => {
+    //         if (res.status === 200){
+    //           this.cards = reject(this.cards, ['id', card.id]);
+    //         }
+    //       });
+    //   }
+    // },
     shuffle() {
       this.cards = shuffle(this.cards);
     },
@@ -159,26 +140,26 @@ export default {
     oldest() {
       this.cards = orderBy(this.cards, 'id', 'asc');
     },
-    redo(card) {
-      axios.patch('/api/v1/cards/' + card.id, {
-        phase: 0,
-        done: false,
-      }).then(res => {
-        if (res.status === 200) {
-          this.cards = reject(this.cards, ['id', card.id]);
-        }
-      });
-    },
-    done(card) {
-      axios.patch('/api/v1/cards/' + card.id, {
-        done: true,
-        done_time: document.getElementById('current_server_date').value
-      }).then(res => {
-        if (res.status === 200) {
-          this.cards = reject(this.cards, ['id', card.id]);
-        }
-      });
-    },
+    // redo(card) {
+    //   axios.patch('/api/v1/cards/' + card.id, {
+    //     phase: 0,
+    //     done: false,
+    //   }).then(res => {
+    //     if (res.status === 200) {
+    //       this.cards = reject(this.cards, ['id', card.id]);
+    //     }
+    //   });
+    // },
+    // done(card) {
+    //   axios.patch('/api/v1/cards/' + card.id, {
+    //     done: true,
+    //     done_time: document.getElementById('current_server_date').value
+    //   }).then(res => {
+    //     if (res.status === 200) {
+    //       this.cards = reject(this.cards, ['id', card.id]);
+    //     }
+    //   });
+    // },
     filter(cards, boolean) {
       return filter(cards, ['done', boolean]);
     },

@@ -9,6 +9,7 @@ RSpec.describe Card, type: :model do
   # user_id { 1 }
 
   it 'is valid with english_text, japanese_text, source and user_id' do
+    pending
     expect(card).to be_valid
   end
 

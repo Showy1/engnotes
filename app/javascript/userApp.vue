@@ -8,12 +8,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-// import CardIndex from 'cards/CardIndex.vue';
-import CardIndexAll from 'cards/CardIndexAll.vue';
+import CardIndex from 'cards/CardIndex.vue';
 import CardShow from 'cards/CardShow.vue';
 
 const routes = [
-  { path: '/', name: 'CardIndexAll', component: CardIndexAll },
+  { path: '/guest', component: CardIndex },
   { path: '/:id(\\d+)', name: 'CardShow', component: CardShow },
 ];
 

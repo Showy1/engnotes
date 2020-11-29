@@ -12,12 +12,17 @@
 
     <div class="header-right mt-3 collapse navbar-collapse " style="font-size: 1.2rem;" id="navbarToggler">
       <div class="ml-auto mr-0 text-right">
-        <% if user_signed_in? %>
-        <span class="mr-2">Hello, <%= current_user.username %></span>
+        <% if user_signed_in? # login %>
+        <span class="mr-2">
+          Hello, <span id="current_username"><%= current_user.username %></span>
+        </span>
+        <%= link_to "MyPage", "/#{current_user.username}", class: "mr-2", method: :get %>
         <%= link_to "EditUser", edit_user_registration_path, class: "mr-2", method: :get %>
         <%= link_to "Logout", destroy_user_session_path, method: :delete %>
         <% else %>
-        <%= link_to "GuestLogin", users_guest_sign_in_path, class: "text-danger font-weight-bold", method: :post %>
+        <%= link_to "GuestLogin", users_guest_sign_in_path, class: "text-danger font-weight-bold mr-2", method: :post %>
+        <%= link_to "Login", new_user_session_path, class: "mr-2", method: :get %>
+        <%= link_to "Signup", new_user_registration_path, class: "", method: :get %>
         <% end %>
       </div>
     </div>
