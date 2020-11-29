@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Card, type: :model do
-  let(:card) { build(:card) }
+  let(:user) { create(:user, confirmed_at: DateTime.now) }
+  let(:card) { build(:card, user_id: user.id) }
   # ref. spec/factories/cards.rb
   # english_text { 'ENGLISH_TEXT' }
   # japanese_text { '日本語の文章' }
   # source { 'https://example.com' }
-  # user_id { 1 }
 
   it 'is valid with english_text, japanese_text, source and user_id' do
     expect(card).to be_valid

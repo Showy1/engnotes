@@ -8,12 +8,7 @@ RSpec.describe 'Cards', type: :request do
   # password {'password'}
 
   describe 'GET /' do
-    it 'returns http redirect without login' do
-      get '/'
-      expect(response).to have_http_status(:found)
-    end
-
-    it 'returns http success with login' do
+    it 'returns http success without login' do
       sign_in user
       get '/'
       expect(response).to have_http_status(:ok)

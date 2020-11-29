@@ -13,6 +13,7 @@ RSpec.feature 'Cards', type: :feature do
     fill_in 'Login', with: user.username
     fill_in 'Password', with: user.password
     click_on 'Log in'
+    click_on 'MyPage'
   end
 
   scenario 'a new card is created, done and deleted', js: true do

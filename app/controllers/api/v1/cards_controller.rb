@@ -1,10 +1,17 @@
 class Api::V1::CardsController < ActionController::API
+  # login required
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_card, only: [:show, :update, :destroy]
 
   rescue_from Exception, with: :render_status_500
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
 
   def index
+    cards = Card.all.order(id: 'DESC').select(:id, :japanese_text, :english_text, :source, :phase, :user_id, :note, :done, :done_time)
+    render json: cards
+  end
+
+  def user_index
     user_cards = Card.where(user_id: current_user.id).order(id: 'DESC')
     user_cards.each do |user_card|
       unless user_card.done == true && (Time.zone.today - user_card.done_time).to_i >= Constants::REVIEW_TIMINGS[user_card.phase]
@@ -20,7 +27,7 @@ class Api::V1::CardsController < ActionController::API
   end
 
   def show
-    render json: @card
+    render json: @card.to_json(include: [user: { only: :username }])
   end
 
   def create
@@ -47,6 +54,7 @@ class Api::V1::CardsController < ActionController::API
     end
 
     def card_params
+      # permit to change values and add user_id
       params.require(:card).permit(:japanese_text, :english_text, :source, :phase, :note, :done, :done_time).merge(user_id: current_user.id)
     end
 
