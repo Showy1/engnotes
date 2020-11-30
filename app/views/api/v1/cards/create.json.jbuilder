@@ -1,5 +1,6 @@
 json.id @card.id
 json.japanese_text @card.japanese_text
+json.youtube_id @card.youtube_id
 json.english_text @card.english_text
 json.source @card.source
 json.phase @card.phase

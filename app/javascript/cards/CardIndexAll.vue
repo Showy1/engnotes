@@ -39,7 +39,7 @@
             EngNotes は、英語フレーズを暗記するためのWebアプリです。英文読み上げ機能を有するオリジナルの英語暗記カードを作成できます。確認した暗記カードは数日後に再表示されます。ここでは、アプリの主な機能の使用方法について説明します。
           </p>
           <p class="mb-2">
-            "New" タブをクリックすると、新規カード作成フォームが表示されます。和文および英文、必要に応じてメモや情報ソース（URLなど）を入力して、 "Submit" してください。追加されたカードの和文が、下の "Undone" タブ上に表示されます。表示された和文をクリックすると、英文、メモ、情報ソースと、各処理のためのボタンが表示されます。情報ソースがURLの場合、自動でリンク化されます。英語フレーズを覚えていれば "done" ボタン、覚えていなければ "redo" ボタンを押しましょう。"done" ボタンを押されたカードは、一時 "Done" タブ上に移動しますが、数日後（1回目は翌日、2回目は4、3回目は7、4回目は11、5回目は15、6回目は20、以降は30日後）に "Undone" タブ上に再表示されます。 "redo" ボタンを押されたカードは、 "Undone"/"Done" タブ切り替え後等に、"Undone" タブ上に再表示されます。その他の処理として、右のスピーカーボタンで英文読み上げ、 "edit" ボタンでカード編集、 "detail" ボタンでカード詳細ページへ移動、 "delete" ボタンでカード削除が可能です。
+            "MyPage"(上部ナビバーから移動)において、"New" タブをクリックすると、新規カード作成フォームが表示されます。「和文またはYouTubeのURL」および英文、必要に応じてメモや情報ソース（URLなど）を入力して、 "Submit" してください。追加されたカードが、下の "Undone" タブ上に表示されます。表示されたカードをクリックすると、英文、メモ、情報ソースと、各処理のためのボタンが表示されます。情報ソースがURLの場合、自動でリンク化されます。英語フレーズを覚えていれば（聞き取ることができれば） "done" ボタン、覚えていなければ（聞き取ることができなければ） "redo" ボタンを押しましょう。"done" ボタンを押されたカードは、一時 "Done" タブ上に移動しますが、数日後（1回目は翌日、2回目は4、3回目は7、4回目は11、5回目は15、6回目は20、以降は30日後）に "Undone" タブ上に再表示されます。 "redo" ボタンを押されたカードは、 "Undone"/"Done" タブ切り替え後等に、"Undone" タブ上に再表示されます。その他の処理として、右のスピーカーボタンで英文読み上げ、 "edit" ボタンでカード編集、 "detail" ボタンでカード詳細ページへ移動、 "delete" ボタンでカード削除が可能です。
           </p>
           <p class="mb-2">
             "Search" タブをクリックすると、カード検索フォームが表示されます。フォームに入力した文字列を和文または英文として含むカードが、即座に表示されます。
@@ -50,13 +50,13 @@
           <p class="mb-2">
             また、ショートカットとして、下記が有効です。
             <ul>
-              <li>カードの "done": カードの和文にフォーカスされた状態で "control" + "Enter"</li>
-              <li>カードの "redo": カードの和文にフォーカスされた状態で "control" + "r"</li>
-              <li>カードの英文読み上げ: カードの和文にフォーカスされた状態で "control" + "s"</li>
+              <li>カードの "done": カードの青色部（和文等が表示されている）にフォーカスされた状態で "control" + "Enter"</li>
+              <li>カードの "redo": カードの青色部にフォーカスされた状態で "control" + "r"</li>
+              <li>カードの英文読み上げ: カードの青色部にフォーカスされた状態で "control" + "s"</li>
             </ul>
           </p>
           <p>
-            説明は以上です。様々な英語フレーズを定着させて、英語力を向上させましょう。
+            説明は以上です。
           </p>
         </b-tab>
       </b-tabs>
@@ -100,7 +100,8 @@ export default {
       var cards = [];
       for(var i in this.cards) {
         var card = this.cards[i];
-        if(card.japanese_text.indexOf(this.keyword) !== -1 || card.english_text.indexOf(this.keyword) !== -1) {
+        // if(card.japanese_text.indexOf(this.keyword) !== -1 || card.english_text.indexOf(this.keyword) !== -1) {
+        if(card.english_text.indexOf(this.keyword) !== -1) {
           cards.push(card);
         }
       }
@@ -115,22 +116,6 @@ export default {
       axios.get('/api/v1/cards.json')
         .then(res => (this.cards = res.data));
     },
-    // addCard(card) {
-    //   this.cards.unshift(card);
-    // },
-    // updateCard(card) {
-    //   axios.patch('/api/v1/cards/' + card.id, {card: card});
-    // },
-    // destroyCard(card) {
-    //   if (confirm('Are you sure you want to delete this card?')){
-    //     axios.delete('/api/v1/cards/' + card.id)
-    //       .then(res => {
-    //         if (res.status === 200){
-    //           this.cards = reject(this.cards, ['id', card.id]);
-    //         }
-    //       });
-    //   }
-    // },
     shuffle() {
       this.cards = shuffle(this.cards);
     },
@@ -140,26 +125,6 @@ export default {
     oldest() {
       this.cards = orderBy(this.cards, 'id', 'asc');
     },
-    // redo(card) {
-    //   axios.patch('/api/v1/cards/' + card.id, {
-    //     phase: 0,
-    //     done: false,
-    //   }).then(res => {
-    //     if (res.status === 200) {
-    //       this.cards = reject(this.cards, ['id', card.id]);
-    //     }
-    //   });
-    // },
-    // done(card) {
-    //   axios.patch('/api/v1/cards/' + card.id, {
-    //     done: true,
-    //     done_time: document.getElementById('current_server_date').value
-    //   }).then(res => {
-    //     if (res.status === 200) {
-    //       this.cards = reject(this.cards, ['id', card.id]);
-    //     }
-    //   });
-    // },
     filter(cards, boolean) {
       return filter(cards, ['done', boolean]);
     },

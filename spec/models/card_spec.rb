@@ -27,7 +27,7 @@ end
 #  done          :boolean          default(FALSE), not null
 #  done_time     :date
 #  english_text  :text(65535)      not null
-#  japanese_text :text(65535)      not null
+#  japanese_text :text(65535)
 #  lock_version  :integer
 #  note          :text(65535)
 #  phase         :integer          default(0)
@@ -35,4 +35,5 @@ end
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  user_id       :bigint
+#  youtube_id    :string(255)
 #

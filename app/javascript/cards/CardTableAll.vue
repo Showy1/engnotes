@@ -13,13 +13,49 @@
         role="tab"
         @keyup.83.ctrl="speak(card.english_text)"
       >
-        <b-button
+        <!-- <b-button
           v-b-toggle="'accordion-' + card.id"
           variant="info"
           block
         >
           {{ card.japanese_text }}
-        </b-button>
+        </b-button> -->
+        <div v-if="card.japanese_text">
+          <b-collapse :id="'collapse-' + card.id" class="position-absolute w-100" style="top: 4px; left: 0;">
+            <b-form-input v-model="card.japanese_text" class="text-center" @blur="$emit('update', card)" />
+          </b-collapse>
+          <b-button
+            v-b-toggle="'accordion-' + card.id"
+            variant="info"
+            block
+          >
+            {{ card.japanese_text }}
+          </b-button>
+        </div>
+        <div v-else-if="card.youtube_id">
+          <b-button
+            v-b-toggle="'accordion-' + card.id"
+            class="py-5 px-0"
+            variant="info"
+            block
+          >
+            <b-embed
+              type="iframe"
+              aspect="16by9"
+              :src="'https://www.youtube.com/embed/' + card.youtube_id"
+              allowfullscreen
+            />
+          </b-button>
+        </div>
+        <div v-else>
+          <b-button
+            v-b-toggle="'accordion-' + card.id"
+            variant="info"
+            block
+          >
+            error
+          </b-button>
+        </div>
       </b-card-header>
       <!-- hidden english text & source-->
       <b-collapse :id="'accordion-' + card.id" role="tabpanel">
