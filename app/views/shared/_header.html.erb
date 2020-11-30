@@ -1,5 +1,5 @@
 <header class="bg-light border-bottom">
-  <nav class="navbar navbar-expand-sm d-flex justify-content-between">
+  <nav class="navbar navbar-expand-md d-flex justify-content-between">
     <div class="header-left ml-1 navbar-brand">
       <%= link_to '/', class: "text-dark text-decoration-none" do %>
         <i class="fas fa-sticky-note fa-2x"></i>
@@ -16,10 +16,12 @@
         <span class="mr-2">
           Hello, <span id="current_username"><%= current_user.username %></span>
         </span>
+        <%= link_to "Top", "/", class: "mr-2", method: :get %>
         <%= link_to "MyPage", "/#{current_user.username}", class: "mr-2", method: :get %>
         <%= link_to "EditUser", edit_user_registration_path, class: "mr-2", method: :get %>
         <%= link_to "Logout", destroy_user_session_path, method: :delete %>
         <% else %>
+        <%= link_to "Top", "/", class: "mr-2", method: :get %>
         <%= link_to "GuestLogin", users_guest_sign_in_path, class: "text-danger font-weight-bold mr-2", method: :post %>
         <%= link_to "Login", new_user_session_path, class: "mr-2", method: :get %>
         <%= link_to "Signup", new_user_registration_path, class: "", method: :get %>

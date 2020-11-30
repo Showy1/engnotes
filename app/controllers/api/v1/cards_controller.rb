@@ -7,7 +7,7 @@ class Api::V1::CardsController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :render_status_404
 
   def index
-    cards = Card.all.order(id: 'DESC').select(:id, :japanese_text, :english_text, :source, :phase, :user_id, :note, :done, :done_time)
+    cards = Card.all.order(id: 'DESC').select(:id, :japanese_text, :youtube_id, :english_text, :source, :phase, :user_id, :note, :done, :done_time)
     render json: cards
   end
 
@@ -22,7 +22,7 @@ class Api::V1::CardsController < ActionController::API
       user_card.phase += 1 unless user_card.phase == Constants::REVIEW_TIMINGS.length - 1
       user_card.save
     end
-    cards = user_cards.select(:id, :japanese_text, :english_text, :source, :phase, :user_id, :note, :done, :done_time)
+    cards = user_cards.select(:id, :japanese_text, :youtube_id, :english_text, :source, :phase, :user_id, :note, :done, :done_time)
     render json: cards
   end
 
@@ -55,7 +55,7 @@ class Api::V1::CardsController < ActionController::API
 
     def card_params
       # permit to change values and add user_id
-      params.require(:card).permit(:japanese_text, :english_text, :source, :phase, :note, :done, :done_time).merge(user_id: current_user.id)
+      params.require(:card).permit(:japanese_text, :youtube_id, :english_text, :source, :phase, :note, :done, :done_time).merge(user_id: current_user.id)
     end
 
     def render_status_404(exception)
