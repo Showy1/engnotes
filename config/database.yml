@@ -3,13 +3,13 @@ default: &default
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   # w/o Docker
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+  # username: root
+  # password:
+  # socket: /tmp/mysql.sock
   # w/ Docker
-  # username: <%= ENV.fetch("MYSQL_USERNAME", "root") %>
-  # password: <%= ENV.fetch("MYSQL_PASSWORD", "password") %>
-  # host: <%= ENV.fetch("MYSQL_HOST", "db") %>
+  username: <%= ENV.fetch("MYSQL_USERNAME", "root") %>
+  password: <%= ENV.fetch("MYSQL_PASSWORD", "password") %>
+  host: <%= ENV.fetch("MYSQL_HOST", "db") %>
 
 development:
   <<: *default
